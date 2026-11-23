@@ -1,0 +1,6 @@
+{
+  "name": "HireSmart AI",
+  "description": "Find the right candidate in seconds, not weeks. AI-powered Applicant Tracking System with resume parsing, weighted candidate ranking, interview automation, and hiring analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

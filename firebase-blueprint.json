@@ -1,0 +1,228 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Recruiter user profile linked to Google Auth.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "displayName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "format": "email", "maxLength": 160 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "organization": { "type": "string", "maxLength": 120 },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["uid", "displayName", "email", "createdAt", "updatedAt"]
+    },
+    "Job": {
+      "title": "Job",
+      "description": "Job requisition managed in HireSmart AI.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "title": { "type": "string", "minLength": 2, "maxLength": 140 },
+        "department": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "employmentType": { "type": "string", "enum": ["Full-Time", "Part-Time", "Contract", "Internship", "Remote"] },
+        "experienceRequired": { "type": "number" },
+        "salaryRange": { "type": "string", "maxLength": 80 },
+        "location": { "type": "string", "maxLength": 120 },
+        "requiredSkills": { "type": "array" },
+        "preferredSkills": { "type": "array" },
+        "educationRequirement": { "type": "string", "maxLength": 160 },
+        "description": { "type": "string", "maxLength": 4000 },
+        "responsibilities": { "type": "array" },
+        "benefits": { "type": "array" },
+        "deadline": { "type": "string", "maxLength": 40 },
+        "status": { "type": "string", "enum": ["Published", "Paused", "Closed", "Draft"] },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "title", "department", "employmentType", "status", "createdAt", "updatedAt"]
+    },
+    "Candidate": {
+      "title": "Candidate",
+      "description": "Structured candidate profile parsed from resume or added by recruiter.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "fullName": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 160 },
+        "phone": { "type": "string", "maxLength": 40 },
+        "location": { "type": "string", "maxLength": 120 },
+        "linkedin": { "type": "string", "maxLength": 240 },
+        "github": { "type": "string", "maxLength": 240 },
+        "portfolio": { "type": "string", "maxLength": 240 },
+        "collegeName": { "type": "string", "maxLength": 160 },
+        "degree": { "type": "string", "maxLength": 160 },
+        "skills": { "type": "array" },
+        "experienceYears": { "type": "number" },
+        "previousCompanies": { "type": "array" },
+        "certifications": { "type": "array" },
+        "languages": { "type": "array" },
+        "achievements": { "type": "array" },
+        "projects": { "type": "array" },
+        "experience": { "type": "array" },
+        "education": { "type": "array" },
+        "optimizationSuggestions": { "type": "array" },
+        "resumeScore": { "type": "number" },
+        "matchScore": { "type": "number" },
+        "source": { "type": "string", "maxLength": 60 },
+        "resumeText": { "type": "string", "maxLength": 12000 },
+        "isFavorite": { "type": "boolean" },
+        "isPriority": { "type": "boolean" },
+        "isWatchlist": { "type": "boolean" },
+        "inTalentPool": { "type": "boolean" },
+        "activityTimeline": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "fullName", "email", "skills", "experienceYears", "createdAt", "updatedAt"]
+    },
+    "Application": {
+      "title": "Application",
+      "description": "Candidate job application tracking pipeline stage and weighted match score.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "stage": { "type": "string", "enum": ["Applied", "Screening", "Shortlisted", "Interview", "Selected", "Offer Sent", "Hired", "Rejected"] },
+        "matchScore": { "type": "number" },
+        "appliedAt": { "type": "string", "maxLength": 64 },
+        "aiExplanation": { "type": "string", "maxLength": 1000 },
+        "rejectionReason": { "type": "string", "maxLength": 300 },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "jobId", "candidateId", "stage", "matchScore", "createdAt", "updatedAt"]
+    },
+    "Interview": {
+      "title": "Interview",
+      "description": "Scheduled candidate interview record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "jobId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "date": { "type": "string", "maxLength": 40 },
+        "time": { "type": "string", "maxLength": 40 },
+        "interviewer": { "type": "string", "maxLength": 120 },
+        "mode": { "type": "string", "enum": ["Online", "Offline"] },
+        "status": { "type": "string", "enum": ["Scheduled", "Completed", "Rescheduled", "Cancelled"] },
+        "meetingLink": { "type": "string", "maxLength": 240 },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "candidateId", "jobId", "date", "time", "interviewer", "mode", "status", "createdAt", "updatedAt"]
+    },
+    "InterviewFeedback": {
+      "title": "InterviewFeedback",
+      "description": "Structured interview scorecard and AI-generated summary.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "interviewId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "candidateId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "communication": { "type": "number" },
+        "technicalSkills": { "type": "number" },
+        "problemSolving": { "type": "number" },
+        "leadership": { "type": "number" },
+        "teamwork": { "type": "number" },
+        "cultureFit": { "type": "number" },
+        "overallScore": { "type": "number" },
+        "notes": { "type": "string", "maxLength": 3000 },
+        "aiSummary": { "type": "string", "maxLength": 2000 },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "interviewId", "candidateId", "overallScore", "createdAt", "updatedAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "Recruiter notification alert.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "type": { "type": "string", "enum": ["New Application", "Interview Reminder", "Job Expiry", "Candidate Shortlisted", "Offer Accepted", "Rejected Candidate"] },
+        "title": { "type": "string", "maxLength": 160 },
+        "message": { "type": "string", "maxLength": 500 },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "type", "title", "message", "read", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Generated recruitment report metadata.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "reportType": { "type": "string", "enum": ["Candidate Report", "Hiring Report", "Interview Report", "Analytics Report"] },
+        "title": { "type": "string", "maxLength": 160 },
+        "format": { "type": "string", "enum": ["PDF", "Excel", "CSV"] },
+        "createdAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["id", "ownerId", "reportType", "title", "format", "createdAt"]
+    },
+    "Settings": {
+      "title": "Settings",
+      "description": "Workspace recruitment preferences, AI weights, and notification settings.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[a-zA-Z0-9_\\-]+$" },
+        "organizationName": { "type": "string", "maxLength": 120 },
+        "theme": { "type": "string", "enum": ["dark", "light"] },
+        "autoScreenThreshold": { "type": "number" },
+        "emailNotifications": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time", "maxLength": 64 }
+      },
+      "required": ["ownerId", "organizationName", "theme", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Recruiter user profiles isolated per authenticated owner."
+    },
+    "/jobs/{jobId}": {
+      "schema": { "$ref": "#/entities/Job" },
+      "description": "Job postings owned by the authenticated recruiter."
+    },
+    "/candidates/{candidateId}": {
+      "schema": { "$ref": "#/entities/Candidate" },
+      "description": "Parsed and managed candidate records owned by the authenticated recruiter."
+    },
+    "/applications/{applicationId}": {
+      "schema": { "$ref": "#/entities/Application" },
+      "description": "Job applications and pipeline stage tracking owned by the authenticated recruiter."
+    },
+    "/interviews/{interviewId}": {
+      "schema": { "$ref": "#/entities/Interview" },
+      "description": "Scheduled interviews owned by the authenticated recruiter."
+    },
+    "/interviewFeedback/{feedbackId}": {
+      "schema": { "$ref": "#/entities/InterviewFeedback" },
+      "description": "Interview evaluation scorecards and AI summaries."
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Recruiter notifications owned by the authenticated recruiter."
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Generated report export records."
+    },
+    "/settings/{userId}": {
+      "schema": { "$ref": "#/entities/Settings" },
+      "description": "Recruiter workspace and AI configuration settings."
+    }
+  }
+}
